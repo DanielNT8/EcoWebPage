@@ -1,0 +1,17 @@
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoService.deps.json
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoService.dll
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoService.pdb
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoBO.dll
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoRepository.dll
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoRepository.pdb
+D:\ECO\Project\EcoWebPage\EcoService\bin\Debug\net8.0\EcoBO.pdb
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.csproj.AssemblyReference.cache
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.GeneratedMSBuildEditorConfig.editorconfig
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.AssemblyInfoInputs.cache
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.AssemblyInfo.cs
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.csproj.CoreCompileInputs.cache
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.csproj.CopyComplete
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.dll
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\refint\EcoService.dll
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.pdb
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\ref\EcoService.dll
