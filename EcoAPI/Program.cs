@@ -123,6 +123,8 @@ namespace EcoAPI
 
             app.MapControllers();
 
+            app.MapGet("/", () => "✅ EcoWebPage API is running successfully!");
+
             app.Run();
         }
     }
