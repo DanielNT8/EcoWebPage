@@ -85,7 +85,8 @@ namespace EcoAPI
                 options.AddPolicy("AllowTrustedOrigins", policy =>
                 {
                     policy.WithOrigins(
-                            "https://eco.info.vn"      // domain chính thức
+                            "https://eco.info.vn",
+                            "https://www.eco.info.vn"
                         )
                         .AllowAnyHeader()
                         .AllowAnyMethod()
