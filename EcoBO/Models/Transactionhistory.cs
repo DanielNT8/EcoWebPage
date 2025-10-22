@@ -22,4 +22,6 @@ public partial class Transactionhistory
     public DateTime? DeletedAt { get; set; }
 
     public string OrderCode { get; set; }
+
+    public string Description { get; set; }
 }

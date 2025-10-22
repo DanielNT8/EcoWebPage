@@ -49,6 +49,7 @@ D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\EcoAPI.AssemblyInfo.cs
 D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\EcoAPI.csproj.CoreCompileInputs.cache
 D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\EcoAPI.MvcApplicationPartsAssemblyInfo.cs
 D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\EcoAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\EcoAPI.sourcelink.json
 D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\staticwebassets.build.json
 D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\staticwebassets.development.json
 D:\ECO\Project\EcoWebPage\EcoAPI\obj\Debug\net8.0\staticwebassets\msbuild.EcoAPI.Microsoft.AspNetCore.StaticWebAssets.props

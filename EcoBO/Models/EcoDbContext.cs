@@ -92,6 +92,7 @@ public partial class EcoDbContext : DbContext
                 .HasColumnType("timestamp without time zone");
             entity.Property(e => e.DateTrade).HasColumnType("timestamp without time zone");
             entity.Property(e => e.DeletedAt).HasColumnType("timestamp without time zone");
+            entity.Property(e => e.Description).HasColumnType("character varying");
             entity.Property(e => e.OrderCode).HasColumnType("character varying");
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.UpdatedAt)

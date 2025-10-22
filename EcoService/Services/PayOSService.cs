@@ -48,6 +48,8 @@ namespace EcoService.Services
                 DateTrade = DateTime.Now,
                 Status = "Pending",
                 OrderCode = orderCode.ToString(),
+                Description = description ?? "Donation",
+                CreatedAt = DateTime.Now
             };
 
             await _transactionRepo.AddTransactionAsync(transaction);
@@ -64,6 +66,29 @@ namespace EcoService.Services
         public async Task<IEnumerable<Transactionhistory>> GetAllTransactionsAsync()
         {
             return await _transactionRepo.GetAllTransactionsAsync();
+        }
+
+
+        // 🧠 Cập nhật trạng thái giao dịch
+        public async Task<Transactionhistory> UpdateTransactionStatusAsync(string orderCode, string status)
+        {
+            var transactions = await _transactionRepo.GetAllTransactionsAsync();
+            var transaction = transactions.FirstOrDefault(t => t.OrderCode == orderCode);
+
+            if (transaction == null)
+                return null;
+
+            transaction.Status = status.ToUpper() switch
+            {
+                "PAID" or "COMPLETED" => "Paid",
+                "CANCELLED" or "FAILED" => "Cancelled",
+                _ => "Pending"
+            };
+
+            transaction.UpdatedAt = DateTime.Now;
+            await _transactionRepo.UpdateTransactionAsync(transaction);
+
+            return transaction;
         }
     }
 

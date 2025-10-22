@@ -13,5 +13,6 @@ namespace EcoService.Interfaces
         Task<CreatePaymentResult> CreatePaymentLinkAsync(int amount, string description, string cancelUrl, string returnUrl);
         Task<PaymentLinkInformation> GetPaymentInfoAsync(long paymentLinkId);
         Task<IEnumerable<Transactionhistory>> GetAllTransactionsAsync();
+        Task<Transactionhistory> UpdateTransactionStatusAsync(string orderCode, string status);
     }
 }

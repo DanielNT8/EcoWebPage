@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcoService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa54092aa6b6f8ec18567f45e248111475164e75")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcoService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcoService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

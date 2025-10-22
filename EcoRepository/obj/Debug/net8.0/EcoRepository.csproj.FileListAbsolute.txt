@@ -8,6 +8,7 @@ D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.Generated
 D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.AssemblyInfoInputs.cache
 D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.AssemblyInfo.cs
 D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.csproj.CoreCompileInputs.cache
+D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.sourcelink.json
 D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.csproj.CopyComplete
 D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\EcoRepository.dll
 D:\ECO\Project\EcoWebPage\EcoRepository\obj\Debug\net8.0\refint\EcoRepository.dll

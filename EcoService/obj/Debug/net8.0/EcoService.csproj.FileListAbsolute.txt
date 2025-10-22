@@ -10,6 +10,7 @@ D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.GeneratedMSBuil
 D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.AssemblyInfoInputs.cache
 D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.AssemblyInfo.cs
 D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.csproj.CoreCompileInputs.cache
+D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.sourcelink.json
 D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.csproj.CopyComplete
 D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\EcoService.dll
 D:\ECO\Project\EcoWebPage\EcoService\obj\Debug\net8.0\refint\EcoService.dll

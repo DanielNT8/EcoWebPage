@@ -29,7 +29,7 @@ namespace EcoAPI.Controllers
 
             try
             {
-                string cancelUrl = "https://your-frontend.com/payment-cancel";
+                string cancelUrl = "https://www.eco.info.vn/";
                 string returnUrl = "https://www.eco.info.vn/";
 
                 var result = await _payOSService.CreatePaymentLinkAsync(
@@ -52,6 +52,33 @@ namespace EcoAPI.Controllers
             }
         }
 
+        // 🧠 API cập nhật trạng thái sau khi thanh toán
+        [HttpGet("update-status")]
+        public async Task<IActionResult> UpdatePaymentStatus([FromQuery] string orderCode, [FromQuery] string status)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(orderCode) || string.IsNullOrEmpty(status))
+                    return BadRequest("Missing orderCode or status.");
+
+                var transaction = await _payOSService.UpdateTransactionStatusAsync(orderCode, status);
+
+                if (transaction == null)
+                    return NotFound("Transaction not found.");
+
+                return Ok(new
+                {
+                    message = "Transaction status updated successfully.",
+                    transaction.OrderCode,
+                    transaction.Status,
+                    transaction.UpdatedAt
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Failed to update transaction status", error = ex.Message });
+            }
+        }
 
         [HttpGet("{oderCode}")]
         public async Task<IActionResult> GetPaymentInfo(long oderCode)
@@ -74,6 +101,7 @@ namespace EcoAPI.Controllers
                     t.OrderCode,
                     t.Amount,
                     t.Status,
+                    t.Description,
                     t.DateTrade,
                     t.CreatedAt
                 });

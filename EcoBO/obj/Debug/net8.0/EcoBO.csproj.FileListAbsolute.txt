@@ -21,6 +21,7 @@ D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.GeneratedMSBuildEditorCon
 D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.AssemblyInfoInputs.cache
 D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.AssemblyInfo.cs
 D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.csproj.CoreCompileInputs.cache
+D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.sourcelink.json
 D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.dll
 D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\refint\EcoBO.dll
 D:\ECO\Project\EcoWebPage\EcoBO\obj\Debug\net8.0\EcoBO.pdb
