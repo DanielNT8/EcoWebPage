@@ -1,0 +1,89 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "EcoDbContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1248",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "EcoBO",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "identity.users",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.community_comments",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.community_hashtags",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.community_interactions",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.community_post_tags",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.community_posts",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.contacts",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.feedbacks",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.transactionhistory",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.web_logs",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}
