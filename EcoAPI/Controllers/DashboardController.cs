@@ -1,10 +1,12 @@
 ﻿using EcoService.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcoAPI.Controllers
 {
     [ApiController]
     [Route("api/dashboard")]
+    [Authorize(Roles = "Admin")]
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _dashboardService;

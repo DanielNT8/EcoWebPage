@@ -1,37 +1,40 @@
-# ===========================
-# STAGE 1: BUILD
-# ===========================
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+# --- DOCKERFILE CHO ECO API ---
 
-# Copy solution and project files
-COPY EcoWebPage.sln ./
-COPY EcoBO/EcoBO.csproj EcoBO/
-COPY EcoRepository/EcoRepository.csproj EcoRepository/
-COPY EcoService/EcoService.csproj EcoService/
-COPY EcoAPI/EcoAPI.csproj EcoAPI/
-
-# Restore dependencies
-RUN dotnet restore EcoWebPage.sln
-
-# Copy all source code
-COPY . .
-
-# Build and publish API project
-RUN dotnet publish EcoAPI/EcoAPI.csproj -c Release -o /app/publish --no-restore
-
-# ===========================
-# STAGE 2: RUNTIME
-# ===========================
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# Stage 1: Base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
-COPY --from=build /app/publish .
-
-# Expose port 8080 (Render dùng port này)
 EXPOSE 8080
 
-# Set environment variable for ASP.NET
-ENV ASPNETCORE_URLS=http://+:8080
+# Stage 2: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
 
-# Start the app
+# 1. Copy file csproj của tất cả các project liên quan
+# Dựa trên hình ảnh Solution Explorer của bạn
+COPY ["EcoAPI/EcoAPI.csproj", "EcoAPI/"]
+COPY ["EcoBO/EcoBO.csproj", "EcoBO/"]
+COPY ["EcoRepository/EcoRepository.csproj", "EcoRepository/"]
+COPY ["EcoService/EcoService.csproj", "EcoService/"]
+
+# 2. Restore dependencies
+RUN dotnet restore "./EcoAPI/EcoAPI.csproj"
+
+# 3. Copy toàn bộ source code
+COPY . .
+WORKDIR "/src/EcoAPI"
+
+# 4. Build
+RUN dotnet build "./EcoAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Stage 3: Publish
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./EcoAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Stage 4: Final
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "EcoAPI.dll"]

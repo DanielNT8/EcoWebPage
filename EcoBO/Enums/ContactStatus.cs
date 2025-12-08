@@ -8,8 +8,8 @@ namespace EcoBO.Enums
 {
     public enum ContactStatus
     {
-        Pending,
-        Done,
-        Cancel
+        PENDING,
+        DONE,
+        CANCELED
     }
 }

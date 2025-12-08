@@ -1,6 +1,7 @@
 ﻿using EcoBO.DTO.Contact;
 using EcoBO.Enums;
 using EcoService.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ namespace EcoAPI.Controllers
 
         // ✅ Get all contacts
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetContacts([FromQuery] ContactFilterParam filter)
         {
             var result = await _contactService.GetAllAsync(filter);
@@ -50,7 +52,8 @@ namespace EcoAPI.Controllers
 
         // ✅ Update contact status
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(Guid id, [FromQuery] string status)
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromQuery] ContactStatus status)
         {
             var updated = await _contactService.UpdateStatusAsync(id, status);
             if (updated == null)

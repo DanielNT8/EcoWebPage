@@ -14,7 +14,7 @@ namespace EcoService.Interfaces
         Task<ContactResponse> CreateAsync(ContactRequest request);
         Task<PagedResult<ContactResponse>> GetAllAsync(ContactFilterParam filter);
         Task<ContactResponse?> GetByIdAsync(Guid id);
-        Task<ContactResponse?> UpdateStatusAsync(Guid contactId, string newStatus);
+        Task<ContactResponse?> UpdateStatusAsync(Guid contactId, ContactStatus newStatus);
         Task<bool> DeleteAsync(Guid contactId);
     }
 }

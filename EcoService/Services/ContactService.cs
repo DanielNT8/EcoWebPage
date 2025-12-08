@@ -1,5 +1,6 @@
 ﻿using EcoBO.Common;
 using EcoBO.DTO.Contact;
+using EcoBO.Enums;
 using EcoBO.Models;
 using EcoRepository.Interfaces;
 using EcoService.Interfaces;
@@ -74,12 +75,12 @@ public class ContactService : IContactService
     }
 
     // ✅ Update status
-    public async Task<ContactResponse?> UpdateStatusAsync(Guid contactId, string newStatus)
+    public async Task<ContactResponse?> UpdateStatusAsync(Guid contactId, ContactStatus newStatus)
     {
         var contact = await _contactRepository.GetByIdAsync(contactId);
         if (contact == null) return null;
 
-        contact.Status = newStatus;
+        contact.Status = newStatus.ToString();
         contact.UpdatedAt = DateTime.UtcNow;
 
         await _contactRepository.UpdateAsync(contact);

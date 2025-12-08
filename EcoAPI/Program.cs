@@ -136,6 +136,13 @@ namespace EcoAPI
             //var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
             //app.Urls.Add($"http://*:{port}");
 
+            // Cấu hình để nhận diện đúng IP và Protocol (HTTPS) từ Render Load Balancer
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor |
+                                   Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+            });
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
