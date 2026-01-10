@@ -17,9 +17,12 @@ namespace EcoRepository.Repositories
         {
             _context = context;
         }
-        public async Task<int> CountUsersAsync()
+        public async Task<int> CountNewUsersAsync(DateTime from, DateTime to)
         {
-            return await _context.Users.CountAsync(u => u.DeletedAt == null); // Chỉ đếm user chưa xóa
+            // Đếm user ĐĂNG KÝ MỚI trong khoảng thời gian này
+            return await _context.Users
+                .AsNoTracking()
+                .CountAsync(u => u.CreatedAt >= from && u.CreatedAt <= to); // Giả sử User có CreatedAt
         }
     }
 }

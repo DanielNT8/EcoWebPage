@@ -1,4 +1,5 @@
-﻿using EcoBO.Models;
+﻿using EcoBO.DTO.Dashboard;
+using EcoBO.Models;
 using EcoRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -50,6 +51,58 @@ namespace EcoRepository.Repositories
                     && t.DeletedAt == null)
                 .OrderByDescending(t => t.DateTrade) 
                 .ToListAsync();
+        }
+
+        // Hàm tính tổng tiền theo khoảng thời gian (Trả về số double luôn, không trả List)
+        public async Task<double> GetTotalRevenueAsync(DateTime from, DateTime to)
+        {
+            return await _context.Transactionhistories
+                .AsNoTracking()
+                .Where(t => t.DeletedAt == null
+                            && t.Status.ToUpper() == "PAID" // Tận dụng index nếu có
+                            && t.DateTrade >= from
+                            && t.DateTrade <= to)
+                .SumAsync(t => t.Amount ?? 0);
+        }
+
+        // Hàm lấy dữ liệu vẽ biểu đồ (Group By Database - Siêu nhanh)
+        public async Task<List<ChartDataPoint>> GetRevenueChartAsync(DateTime from, DateTime to)
+        {
+            // Logic: Nếu khoảng cách > 31 ngày -> Group theo Tháng. Ngược lại Group theo Ngày.
+            var daysDiff = (to - from).TotalDays;
+            var isMonthly = daysDiff > 31;
+
+            var query = _context.Transactionhistories
+                .AsNoTracking()
+                .Where(t => t.DeletedAt == null
+                            && t.Status.ToUpper() == "PAID"
+                            && t.DateTrade >= from
+                            && t.DateTrade <= to);
+
+            if (isMonthly)
+            {
+                // Group theo Tháng (Postgres)
+                return await query
+                    .GroupBy(t => new { t.DateTrade.Value.Year, t.DateTrade.Value.Month })
+                    .Select(g => new ChartDataPoint
+                    {
+                        Date = new DateTime(g.Key.Year, g.Key.Month, 1),
+                        Value = g.Sum(t => t.Amount ?? 0)
+                    })
+                    .ToListAsync();
+            }
+            else
+            {
+                // Group theo Ngày
+                return await query
+                    .GroupBy(t => t.DateTrade.Value.Date)
+                    .Select(g => new ChartDataPoint
+                    {
+                        Date = g.Key,
+                        Value = g.Sum(t => t.Amount ?? 0)
+                    })
+                    .ToListAsync();
+            }
         }
     }
 }

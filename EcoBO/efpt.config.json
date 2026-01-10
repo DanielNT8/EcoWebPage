@@ -27,6 +27,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "userservices.community_events",
+         "ObjectType": 0
+      },
+      {
          "Name": "userservices.community_hashtags",
          "ObjectType": 0
       },
@@ -44,6 +48,10 @@
       },
       {
          "Name": "userservices.contacts",
+         "ObjectType": 0
+      },
+      {
+         "Name": "userservices.event_registrations",
          "ObjectType": 0
       },
       {

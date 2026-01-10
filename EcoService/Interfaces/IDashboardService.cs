@@ -1,4 +1,4 @@
-﻿using EcoBO.DTO;
+﻿using EcoBO.DTO.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace EcoService.Interfaces
 {
     public interface IDashboardService
     {
-        Task<DashboardResponse> GetDashboardStatsAsync();
+        Task<DashboardResponse> GetDashboardStatsAsync(DashboardFilterRequest request);
     }
 }

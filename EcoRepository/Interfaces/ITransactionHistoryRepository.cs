@@ -1,4 +1,5 @@
-﻿using EcoBO.Models;
+﻿using EcoBO.DTO.Dashboard;
+using EcoBO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace EcoRepository.Interfaces
         Task UpdateTransactionAsync(Transactionhistory transaction);
         Task<Transactionhistory?> GetByOrderCodeAsync(string orderCode);
         Task<IEnumerable<Transactionhistory>> GetSuccessTransactionsAsync();
+        Task<double> GetTotalRevenueAsync(DateTime from, DateTime to);
+        Task<List<ChartDataPoint>> GetRevenueChartAsync(DateTime from, DateTime to);
     }
 }

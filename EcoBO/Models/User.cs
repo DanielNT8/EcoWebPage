@@ -39,7 +39,11 @@ public partial class User
 
     public virtual ICollection<CommunityComment> CommunityComments { get; set; } = new List<CommunityComment>();
 
+    public virtual ICollection<CommunityEvent> CommunityEvents { get; set; } = new List<CommunityEvent>();
+
     public virtual ICollection<CommunityInteraction> CommunityInteractions { get; set; } = new List<CommunityInteraction>();
 
     public virtual ICollection<CommunityPost> CommunityPosts { get; set; } = new List<CommunityPost>();
+
+    public virtual ICollection<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
 }

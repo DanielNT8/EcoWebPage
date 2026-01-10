@@ -1,4 +1,5 @@
-﻿using EcoService.Interfaces;
+﻿using EcoBO.DTO.Dashboard;
+using EcoService.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,16 @@ namespace EcoAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDashboard()
+        public async Task<IActionResult> GetDashboard([FromQuery] DateTime? fromDate, [FromQuery] DateTime? toDate)
         {
-            var data = await _dashboardService.GetDashboardStatsAsync();
+            // Nếu Frontend không gửi ngày (Load lần đầu), mặc định lấy 7 ngày gần nhất
+            var request = new DashboardFilterRequest
+            {
+                FromDate = fromDate ?? DateTime.UtcNow.AddDays(-7),
+                ToDate = toDate ?? DateTime.UtcNow
+            };
+
+            var data = await _dashboardService.GetDashboardStatsAsync(request);
             return Ok(data);
         }
     }

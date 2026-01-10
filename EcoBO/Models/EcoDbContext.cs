@@ -15,6 +15,8 @@ public partial class EcoDbContext : DbContext
 
     public virtual DbSet<CommunityComment> CommunityComments { get; set; }
 
+    public virtual DbSet<CommunityEvent> CommunityEvents { get; set; }
+
     public virtual DbSet<CommunityHashtag> CommunityHashtags { get; set; }
 
     public virtual DbSet<CommunityInteraction> CommunityInteractions { get; set; }
@@ -24,6 +26,8 @@ public partial class EcoDbContext : DbContext
     public virtual DbSet<CommunityPostTag> CommunityPostTags { get; set; }
 
     public virtual DbSet<Contact> Contacts { get; set; }
+
+    public virtual DbSet<EventRegistration> EventRegistrations { get; set; }
 
     public virtual DbSet<Feedback> Feedbacks { get; set; }
 
@@ -49,6 +53,7 @@ public partial class EcoDbContext : DbContext
             .HasPostgresEnum("realtime", "equality_op", new[] { "eq", "neq", "lt", "lte", "gt", "gte", "in" })
             .HasPostgresEnum("storage", "buckettype", new[] { "STANDARD", "ANALYTICS", "VECTOR" })
             .HasPostgresExtension("extensions", "pg_stat_statements")
+            .HasPostgresExtension("extensions", "pg_trgm")
             .HasPostgresExtension("extensions", "pgcrypto")
             .HasPostgresExtension("extensions", "uuid-ossp")
             .HasPostgresExtension("graphql", "pg_graphql")
@@ -92,6 +97,57 @@ public partial class EcoDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.CommunityComments)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("fk_comments_user");
+        });
+
+        modelBuilder.Entity<CommunityEvent>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("community_events_pkey");
+
+            entity.ToTable("community_events", "userservices");
+
+            entity.HasIndex(e => e.Slug, "community_events_slug_key").IsUnique();
+
+            entity.HasIndex(e => e.Slug, "idx_events_slug");
+
+            entity.HasIndex(e => new { e.Status, e.StartDate }, "idx_events_status_date");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("gen_random_uuid()")
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CurrentParticipants)
+                .HasDefaultValue(0)
+                .HasColumnName("current_participants");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.Location)
+                .IsRequired()
+                .HasColumnName("location");
+            entity.Property(e => e.MaxParticipants).HasColumnName("max_participants");
+            entity.Property(e => e.Slug)
+                .IsRequired()
+                .HasColumnName("slug");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'DRAFT'::character varying")
+                .HasColumnName("status");
+            entity.Property(e => e.ThumbnailUrl).HasColumnName("thumbnail_url");
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasColumnName("title");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.CommunityEvents)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("community_events_created_by_fkey");
         });
 
         modelBuilder.Entity<CommunityHashtag>(entity =>
@@ -158,8 +214,6 @@ public partial class EcoDbContext : DbContext
             entity.HasIndex(e => e.Slug, "community_posts_slug_key").IsUnique();
 
             entity.HasIndex(e => e.MediaUrls, "idx_posts_media").HasMethod("gin");
-
-            entity.HasIndex(e => e.Slug, "idx_posts_slug");
 
             entity.HasIndex(e => e.Status, "idx_posts_status");
 
@@ -242,15 +296,54 @@ public partial class EcoDbContext : DbContext
 
             entity.Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
             entity.Property(e => e.ContactInfo).HasMaxLength(255);
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone");
-            entity.Property(e => e.DeletedAt).HasColumnType("timestamp without time zone");
             entity.Property(e => e.Status).HasMaxLength(50);
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone");
             entity.Property(e => e.UserName).HasColumnType("character varying");
+        });
+
+        modelBuilder.Entity<EventRegistration>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("event_registrations_pkey");
+
+            entity.ToTable("event_registrations", "userservices");
+
+            entity.HasIndex(e => e.ParticipantEmail, "idx_registrations_email");
+
+            entity.HasIndex(e => e.EventId, "idx_registrations_event");
+
+            entity.HasIndex(e => e.UserId, "idx_registrations_user");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("gen_random_uuid()")
+                .HasColumnName("id");
+            entity.Property(e => e.EventId).HasColumnName("event_id");
+            entity.Property(e => e.ParticipantEmail)
+                .IsRequired()
+                .HasColumnName("participant_email");
+            entity.Property(e => e.ParticipantName)
+                .IsRequired()
+                .HasColumnName("participant_name");
+            entity.Property(e => e.ParticipantPhone).HasColumnName("participant_phone");
+            entity.Property(e => e.RegisteredAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("registered_at");
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasDefaultValueSql("'REGISTERED'::character varying")
+                .HasColumnName("status");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Event).WithMany(p => p.EventRegistrations)
+                .HasForeignKey(d => d.EventId)
+                .HasConstraintName("fk_registration_event");
+
+            entity.HasOne(d => d.User).WithMany(p => p.EventRegistrations)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_registration_user");
         });
 
         modelBuilder.Entity<Feedback>(entity =>
@@ -258,6 +351,10 @@ public partial class EcoDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("feedbacks_pkey");
 
             entity.ToTable("feedbacks", "userservices");
+
+            entity.HasIndex(e => new { e.Status, e.CreatedAt }, "idx_feedbacks_main_filter")
+                .IsDescending(false, true)
+                .HasFilter("(\"DeletedAt\" IS NULL)");
 
             entity.Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
             entity.Property(e => e.ContactInfo).HasMaxLength(255);

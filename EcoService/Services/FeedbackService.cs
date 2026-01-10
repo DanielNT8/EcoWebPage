@@ -2,6 +2,7 @@
 using EcoBO.DTO.Feedback;
 using EcoBO.Models;
 using EcoRepository.Interfaces;
+using EcoService.Helpers;
 using EcoService.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,32 +23,42 @@ namespace EcoService.Services
 
         public async Task<PagedResult<FeedbackResponse>> GetAllAsync(FeedbackFilterParam filter)
         {
-            var pagedFeedbacks = await _repo.GetFeedbacksAsync(filter);
+            // 1. Gọi Repo lấy Entity
+            var pagedEntities = await _repo.GetFeedbacksAsync(filter);
 
-            var responses = pagedFeedbacks.Items.Select(f => new FeedbackResponse
+            // 2. Mapping Entity -> DTO (Thực hiện tại Service)
+            // Việc loop ở đây chấp nhận được với PageSize nhỏ (10-20-50 item)
+            var responseItems = pagedEntities.Items.Select(f => new FeedbackResponse
             {
                 Id = f.Id,
                 UserName = f.UserName,
                 Message = f.Message,
                 ContactInfo = f.ContactInfo,
-                CreatedAt = f.CreatedAt ?? DateTime.Now,
+                // Xử lý Timezone hiển thị tại đây
+                CreatedAt = (f.CreatedAt ?? DateTime.UtcNow).ToVietnamTime()
             }).ToList();
 
-            return new PagedResult<FeedbackResponse>(responses, pagedFeedbacks.TotalCount, filter.PageNumber, filter.PageSize);
+            // 3. Trả về PagedResult mới chứa DTO
+            return new PagedResult<FeedbackResponse>(
+                responseItems,
+                pagedEntities.TotalCount,
+                filter.PageIndex,
+                filter.PageSize
+            );
         }
 
-        public async Task<FeedbackResponse?> GetByIdAsync(Guid id)
+       public async Task<FeedbackResponse?> GetByIdAsync(Guid id)
         {
-            var feedback = await _repo.GetByIdAsync(id);
-            if (feedback == null) return null;
+            var f = await _repo.GetByIdAsync(id);
+            if (f == null) return null;
 
             return new FeedbackResponse
             {
-                Id = feedback.Id,
-                UserName = feedback.UserName,
-                Message = feedback.Message,
-                ContactInfo = feedback.ContactInfo,
-                CreatedAt = feedback.CreatedAt ?? DateTime.Now,
+                Id = f.Id,
+                UserName = f.UserName,
+                Message = f.Message,
+                ContactInfo = f.ContactInfo,
+                CreatedAt = (f.CreatedAt ?? DateTime.UtcNow).ToVietnamTime()
             };
         }
 
@@ -55,6 +66,7 @@ namespace EcoService.Services
         {
             var feedback = new Feedback
             {
+                Id = Guid.NewGuid(),
                 UserName = request.UserName,
                 Message = request.Message ?? string.Empty,
                 ContactInfo = request.ContactInfo ?? string.Empty,

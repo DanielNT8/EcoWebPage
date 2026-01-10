@@ -86,11 +86,14 @@ namespace EcoRepository.Repositories
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();
         }
-
-        public async Task<int> CountContactsByStatusAsync(string status)
+        public async Task<int> CountContactsByStatusAsync(string status, DateTime from, DateTime to)
         {
-      
-            return await _context.Contacts.CountAsync(c => c.Status.ToLower() == status.ToLower());
+            return await _context.Contacts
+                .AsNoTracking()
+                .Where(c => c.Status.ToLower() == status.ToLower()
+                            && c.CreatedAt >= from
+                            && c.CreatedAt <= to)
+                .CountAsync();
         }
 
     }

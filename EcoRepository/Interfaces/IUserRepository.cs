@@ -8,6 +8,6 @@ namespace EcoRepository.Interfaces
 {
     public interface IUserRepository
     {
-        Task<int> CountUsersAsync();
+        Task<int> CountNewUsersAsync(DateTime from, DateTime to);
     }
 }

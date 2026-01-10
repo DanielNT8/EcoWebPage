@@ -74,6 +74,7 @@ namespace EcoAPI
             builder.Services.AddScoped<IDashboardService, DashboardService>();
             builder.Services.AddScoped<ICommunityService, CommunityService>();
             builder.Services.AddScoped<IMediaService, MediaService>();
+            builder.Services.AddScoped<IEventService, EventService>();
             // Repository DI
             builder.Services.AddScoped<IWebLogRepository, WebLogRepository>();
             builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
@@ -81,6 +82,7 @@ namespace EcoAPI
             builder.Services.AddScoped<ITransactionHistoryRepository, TransactionHistoryRepository>();
             builder.Services.AddScoped<ICommunityRepository, CommunityRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
 
             // 🔒 CORS CONFIGURATION
             var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
@@ -96,12 +98,12 @@ namespace EcoAPI
                 });
             });
 
-            // 1. Lấy cấu hình (Shared Config)
+            // Lấy cấu hình (Shared Config)
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
             builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.Configure<PayOSSettings>(builder.Configuration.GetSection("PayOS"));
 
-            // 2. Chỉ cấu hình xác thực (Verify), KHÔNG cấu hình sinh token
+            // Chỉ cấu hình xác thực (Verify), KHÔNG cấu hình sinh token
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -126,7 +128,9 @@ namespace EcoAPI
                 });
 
 
-           
+            // Health Checks: Giúp Load Balancer biết service còn sống không
+            builder.Services.AddHealthChecks()
+                .AddDbContextCheck<EcoDbContext>(); // Check xem DB có connect được không
 
 
 
@@ -152,6 +156,8 @@ namespace EcoAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.MapHealthChecks("/health");
 
             app.UseCors("AllowTrustedOrigins");
 

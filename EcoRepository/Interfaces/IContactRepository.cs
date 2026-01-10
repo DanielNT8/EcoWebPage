@@ -16,6 +16,6 @@ namespace EcoRepository.Interfaces
         Task<PagedResult<Contact>> GetContactsAsync(ContactFilterParam filter);
         Task UpdateAsync(Contact contact);
         Task DeleteAsync(Contact contact);
-        Task<int> CountContactsByStatusAsync(string status);
+        Task<int> CountContactsByStatusAsync(string status, DateTime from, DateTime to);
     }
 }
