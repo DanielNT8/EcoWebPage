@@ -35,7 +35,7 @@ namespace EcoService.Services
                 Message = f.Message,
                 ContactInfo = f.ContactInfo,
                 // Xử lý Timezone hiển thị tại đây
-                CreatedAt = (f.CreatedAt ?? DateTime.UtcNow).ToVietnamTime()
+                CreatedAt = f.CreatedAt ?? DateTime.UtcNow
             }).ToList();
 
             // 3. Trả về PagedResult mới chứa DTO
@@ -58,7 +58,7 @@ namespace EcoService.Services
                 UserName = f.UserName,
                 Message = f.Message,
                 ContactInfo = f.ContactInfo,
-                CreatedAt = (f.CreatedAt ?? DateTime.UtcNow).ToVietnamTime()
+                CreatedAt = f.CreatedAt ?? DateTime.UtcNow
             };
         }
 

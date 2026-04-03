@@ -85,14 +85,14 @@ namespace EcoRepository.Repositories
 
         public async Task UpdateAsync(Feedback feedback)
         {
-            feedback.UpdatedAt = DateTime.Now;
+            feedback.UpdatedAt = DateTime.UtcNow;
             _context.Feedbacks.Update(feedback);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Feedback feedback)
         {
-            feedback.DeletedAt = DateTime.Now;
+            feedback.DeletedAt = DateTime.UtcNow;
             _context.Feedbacks.Update(feedback);
             await _context.SaveChangesAsync();
         }

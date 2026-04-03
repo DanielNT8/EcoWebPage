@@ -22,7 +22,7 @@ namespace EcoRepository.Repositories
         public async Task AddAsync(Contact contact)
         {
             contact.Id = Guid.NewGuid();
-            contact.CreatedAt = DateTime.Now;
+            contact.CreatedAt = DateTime.UtcNow;
             contact.Status = "Pending";
             await _context.Contacts.AddAsync(contact);
             await _context.SaveChangesAsync();
@@ -74,7 +74,7 @@ namespace EcoRepository.Repositories
 
         public async Task UpdateAsync(Contact contact)
         {
-            contact.UpdatedAt = DateTime.Now;
+            contact.UpdatedAt = DateTime.UtcNow;
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();
         }
@@ -82,7 +82,7 @@ namespace EcoRepository.Repositories
         public async Task DeleteAsync(Contact contact)
         {
             contact.Status = "Deleted";
-            contact.DeletedAt = DateTime.Now;
+            contact.DeletedAt = DateTime.UtcNow;
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();
         }
